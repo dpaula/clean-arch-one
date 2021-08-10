@@ -1,4 +1,4 @@
-package com.dpaula.escola.aluno;
+package com.dpaula.escola.dominio.aluno;
 
 public class FabricaDeAluno {
 	

@@ -1,8 +1,7 @@
-package com.dpaula.escola.aluno;
+package com.dpaula.escola.dominio.aluno;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.dpaula.escola.aluno.CPF;
 import org.junit.jupiter.api.Test;
 
 class CPFTest {

@@ -1,6 +1,6 @@
-package com.dpaula.escola.indicacao;
+package com.dpaula.escola.dominio.indicacao;
 
-import com.dpaula.escola.aluno.Aluno;
+import com.dpaula.escola.dominio.aluno.Aluno;
 
 import java.time.LocalDateTime;
 
