@@ -16,5 +16,4 @@ public class Email {
 	public String getEndereco() {
 		return endereco;
 	}
-
 }
