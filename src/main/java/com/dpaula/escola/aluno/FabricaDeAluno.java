@@ -1,4 +1,4 @@
-package escola;
+package com.dpaula.escola.aluno;
 
 public class FabricaDeAluno {
 	
