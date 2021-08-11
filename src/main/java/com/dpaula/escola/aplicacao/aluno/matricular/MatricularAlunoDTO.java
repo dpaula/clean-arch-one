@@ -22,4 +22,16 @@ public class MatricularAlunoDTO {
     public Aluno criarAluno() {
         return new Aluno(new CPF(cpfAluno), nomeAluno, new Email(emailAluno));
     }
+
+    public String getNomeAluno() {
+        return nomeAluno;
+    }
+
+    public String getCpfAluno() {
+        return cpfAluno;
+    }
+
+    public String getEmailAluno() {
+        return emailAluno;
+    }
 }
