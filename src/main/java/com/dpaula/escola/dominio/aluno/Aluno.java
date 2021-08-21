@@ -24,15 +24,15 @@ public class Aluno {
 		}
 		telefones.add(new Telefone(ddd, numero));
 	}
-	
-	public String getCpf() {
-		return cpf.getNumero();
+
+	public CPF getCpf() {
+		return cpf;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public String getEmail() {
 		return email.getEndereco();
 	}

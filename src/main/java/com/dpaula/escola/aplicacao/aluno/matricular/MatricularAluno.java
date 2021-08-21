@@ -1,6 +1,8 @@
 package com.dpaula.escola.aplicacao.aluno.matricular;
 
+import com.dpaula.escola.dominio.PublicadorEventos;
 import com.dpaula.escola.dominio.aluno.Aluno;
+import com.dpaula.escola.dominio.aluno.AlunoMatriculado;
 import com.dpaula.escola.dominio.aluno.AlunoRepository;
 
 /**
@@ -9,13 +11,17 @@ import com.dpaula.escola.dominio.aluno.AlunoRepository;
 public class MatricularAluno {
 
     private final AlunoRepository repository;
+    private final PublicadorEventos publicadorEventos;
 
-    public MatricularAluno(AlunoRepository repository) {
+    public MatricularAluno(final AlunoRepository repository, final PublicadorEventos publicadorEventos) {
         this.repository = repository;
+        this.publicadorEventos = publicadorEventos;
     }
 
-    public void executa(MatricularAlunoDTO alunoDTO) {
-        Aluno novo = alunoDTO.criarAluno();
+    public void executa(final MatricularAlunoDTO alunoDTO) {
+        final Aluno novo = alunoDTO.criarAluno();
         repository.matricular(novo);
+
+        publicadorEventos.publicar(new AlunoMatriculado(novo.getCpf()));
     }
 }

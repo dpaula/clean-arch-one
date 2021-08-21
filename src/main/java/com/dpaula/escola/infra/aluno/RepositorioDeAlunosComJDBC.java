@@ -1,5 +1,7 @@
 package com.dpaula.escola.infra.aluno;
 
+import com.dpaula.escola.dominio.aluno.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,68 +9,66 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dpaula.escola.dominio.aluno.*;
-
 public class RepositorioDeAlunosComJDBC implements AlunoRepository {
 
 	private final Connection connection;
 	
-	public RepositorioDeAlunosComJDBC(Connection connection) {
+	public RepositorioDeAlunosComJDBC(final Connection connection) {
 		this.connection = connection;
 	}
 
 	@Override
-	public void matricular(Aluno aluno) {
+	public void matricular(final Aluno aluno) {
 		try {
 			String sql = "INSERT INTO ALUNO VALUES(?, ?, ?)";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setString(1, aluno.getCpf());
+			ps.setString(1, aluno.getCpf().getNumero());
 			ps.setString(2, aluno.getNome());
 			ps.setString(3, aluno.getEmail());
 			ps.execute();
-			
+
 			sql = "INSERT INTO TELEFONE VALUES(?, ?)";
 			ps = connection.prepareStatement(sql);
-			for (Telefone telefone : aluno.getTelefones()) {
+			for (final Telefone telefone : aluno.getTelefones()) {
 				ps.setString(1, telefone.getDdd());
 				ps.setString(2, telefone.getNumero());
 				ps.execute();
 			}
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
 	@Override
-	public Aluno buscarPorCPF(CPF cpf) {
+	public Aluno buscarPorCPF(final CPF cpf) {
 		try {
 			String sql = "SELECT id, nome, email FROM ALUNO WHERE cpf = ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setString(1, cpf.getNumero());
 
 			ResultSet rs = ps.executeQuery();
-			boolean encontrou = rs.next();
+			final boolean encontrou = rs.next();
 			if (!encontrou) {
 				throw new AlunoNaoEncontrado(cpf);
 			}
 
-			String nome = rs.getString("nome");
-			Email email = new Email(rs.getString("email"));
-			Aluno encontrado = new Aluno(cpf, nome, email);
+			final String nome = rs.getString("nome");
+			final Email email = new Email(rs.getString("email"));
+			final Aluno encontrado = new Aluno(cpf, nome, email);
 			
-			Long id = rs.getLong("id");
+			final Long id = rs.getLong("id");
 			sql = "SELECT ddd, numero FROM TELEFONE WHERE aluno_id = ?";
 			ps = connection.prepareStatement(sql);
 			ps.setLong(1, id);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				String numero = rs.getString("numero");
-				String ddd = rs.getString("ddd");
+				final String numero = rs.getString("numero");
+				final String ddd = rs.getString("ddd");
 				encontrado.adicionarTelefone(ddd, numero);
 			}
 			
 			return encontrado;
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -77,23 +77,23 @@ public class RepositorioDeAlunosComJDBC implements AlunoRepository {
 	public List<Aluno> listarTodosAlunosMatriculados() {
 		try {
 			String sql = "SELECT id, cpf, nome, email FROM ALUNO";
-			PreparedStatement ps = connection.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
-			List<Aluno> alunos = new ArrayList<>();
+			final PreparedStatement ps = connection.prepareStatement(sql);
+			final ResultSet rs = ps.executeQuery();
+			final List<Aluno> alunos = new ArrayList<>();
 			while (rs.next()) {
-				CPF cpf = new CPF(rs.getString("cpf"));
-				String nome = rs.getString("nome");
-				Email email = new Email(rs.getString("email"));
-				Aluno aluno = new Aluno(cpf, nome, email);
+				final CPF cpf = new CPF(rs.getString("cpf"));
+				final String nome = rs.getString("nome");
+				final Email email = new Email(rs.getString("email"));
+				final Aluno aluno = new Aluno(cpf, nome, email);
 				
-				Long id = rs.getLong("id");
+				final Long id = rs.getLong("id");
 				sql = "SELECT ddd, numero FROM TELEFONE WHERE aluno_id = ?";
-				PreparedStatement psTelefone = connection.prepareStatement(sql);
+				final PreparedStatement psTelefone = connection.prepareStatement(sql);
 				psTelefone.setLong(1, id);
-				ResultSet rsTelefone = psTelefone.executeQuery();
+				final ResultSet rsTelefone = psTelefone.executeQuery();
 				while (rsTelefone.next()) {
-					String numero = rsTelefone.getString("numero");
-					String ddd = rsTelefone.getString("ddd");
+					final String numero = rsTelefone.getString("numero");
+					final String ddd = rsTelefone.getString("ddd");
 					aluno.adicionarTelefone(ddd, numero);
 				}
 			
@@ -101,7 +101,7 @@ public class RepositorioDeAlunosComJDBC implements AlunoRepository {
 			}
 			
 			return alunos;
-		} catch (SQLException e) {
+		} catch (final SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}

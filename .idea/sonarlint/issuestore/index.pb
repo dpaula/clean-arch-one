@@ -5,8 +5,6 @@ l
 <src/test/java/com/dpaula/escola/dominio/aluno/EmailTest.java,0/b/0b50469ac8c45bac11732661d8febf2a81d7041e
 o
 ?src/test/java/com/dpaula/escola/dominio/aluno/TelefoneTest.java,5/7/57fa6bbe14678c8425b5a92b188b11d6ce351452
-f
-6src/main/java/com/dpaula/escola/dominio/aluno/CPF.java,0/5/057a05133c3e0af9cbd8f4db5b41085df1b8128a
 p
 @src/main/java/com/dpaula/escola/dominio/indicacao/Indicacao.java,4/e/4e6c5b5c29c421218a78f1e497d98b358f8c857a
 r
