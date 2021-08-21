@@ -5,21 +5,24 @@ import java.util.List;
 
 public class Aluno {
 	
-	private CPF cpf;
-	private String nome;
+	private final CPF cpf;
+	private final String nome;
 	
-	private Email email;
+	private final Email email;
 	
-	private List<Telefone> telefones = new ArrayList<>();
+	private final List<Telefone> telefones = new ArrayList<>();
 	
-	public Aluno(CPF cpf, String nome, Email email) {
+	public Aluno(final CPF cpf, final String nome, final Email email) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.email = email;
 	}
 
-	public void adicionarTelefone(String ddd, String numero) {
-		this.telefones.add(new Telefone(ddd, numero));
+	public void adicionarTelefone(final String ddd, final String numero) {
+		if (telefones.size() == 2) {
+			throw new IllegalArgumentException("Numero maximo de telefones atingido!");
+		}
+		telefones.add(new Telefone(ddd, numero));
 	}
 	
 	public String getCpf() {
@@ -35,7 +38,7 @@ public class Aluno {
 	}
 
 	public List<Telefone> getTelefones() {
-		return this.telefones;
+		return telefones;
 	}
 }
 
